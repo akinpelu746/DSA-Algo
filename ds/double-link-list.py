@@ -33,6 +33,31 @@ class DoublyLinkedList:
             self.tail = new_node
         self.size += 1
 
+    def insert_at(self, index, data):
+        if index < 0 or index > self.size:
+            raise IndexError("Index out of range")
+
+        if index == 0:
+            self.insert_first(data)
+            return
+
+        if index == self.size:
+            self.insert_last(data)
+            return
+
+        new_node = Node(data)
+
+        current = self.head
+        for _ in range(index - 1):
+            current = current.next
+
+        new_node.prev = current.prev
+        new_node.prev.next = new_node
+        current.prev = new_node
+        new_node.next = current
+
+        self.size += 1
+
     def delete_first(self):
         if self.head is None:
             raise IndexError("List is empty")
